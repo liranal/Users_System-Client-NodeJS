@@ -1,5 +1,9 @@
-import { SIGN_IN, SIGN_OUT } from "./types";
+import { SIGN_IN, SIGN_OUT, GET_USER_INFO } from "./types";
 import axios from "axios";
+
+export const logout = (dataForLogout) => {
+  return { type: SIGN_OUT, payload: { isSignedIn: false, userId: null } };
+};
 export const register = (dataForRegister) => async (dispatch) => {
   const response = await axios.post(
     "http://localhost:40040/api/auth/register",
@@ -10,10 +14,23 @@ export const register = (dataForRegister) => async (dispatch) => {
 };
 
 export const login = (dataForLogin) => async (dispatch) => {
-  const response = await axios.post(
+  const LoginResponse = await axios.post(
     "http://localhost:40040/api/auth/login",
     dataForLogin
   );
-  console.log(response.data);
-  dispatch({ type: SIGN_IN, payload: response.data });
+  console.log(LoginResponse.data.auth);
+  if (LoginResponse.data.auth) {
+    dispatch({ type: SIGN_IN, payload: LoginResponse.data });
+
+    const UserInfoResponse = await axios.get(
+      `http://localhost:40040/api/users/${LoginResponse.data.userId}`,
+      {
+        headers: {
+          "x-access-token": LoginResponse.data.token,
+        },
+      }
+    );
+
+    dispatch({ type: GET_USER_INFO, payload: UserInfoResponse.data });
+  }
 };
