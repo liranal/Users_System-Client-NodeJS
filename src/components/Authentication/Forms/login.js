@@ -42,7 +42,8 @@ export const Login = ({ containerRef, loginFunc }) => {
         <button
           type="button"
           className="btn"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             loginFunc(username, password);
           }}
         >

@@ -1,31 +1,29 @@
 import React from "react";
-import AuthenticationForm from "./Authentication/AuthenticationForm";
-import { useDispatch, useSelector } from "react-redux";
-import { login, register } from "../actions";
+import { useSelector } from "react-redux";
+
+import "./App.scss";
+import PrivateRoute from "../route/PrivateRoute";
+import PublicRoute from "../route/PublicRoute";
+import { Router, Switch } from "react-router-dom";
+import LoginPage from "./LoginPage";
+import HomePage from "./HomePage";
+import { history } from "../route/history";
 const App = () => {
-  const dispatch = useDispatch();
   const isSignedIn = useSelector((state) => state.auth.isSignedIn);
 
-  const registerClick = (username, email, password) => {
-    dispatch(register({ username, email, password }));
-  };
-
-  const loginClick = (username, password) => {
-    dispatch(login({ username, password }));
-  };
-
-  if (!isSignedIn) {
-    return (
-      <div>
-        <AuthenticationForm
-          loginFunc={loginClick}
-          registerFunc={registerClick}
+  return (
+    <div>
+      <Switch>
+        <PublicRoute path="/" component={LoginPage} exact={true} />
+        <PrivateRoute
+          path="/Home"
+          component={HomePage}
+          exact={true}
+          isSignedIn={isSignedIn}
         />
-      </div>
-    );
-  } else {
-    return <div>Hello {}</div>;
-  }
+      </Switch>
+    </div>
+  );
 };
 
 export default App;

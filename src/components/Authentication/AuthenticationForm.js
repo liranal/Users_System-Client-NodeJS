@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Login, Register } from "./Forms";
 import "./AuthForm.scss";
-const AuthenticationForm = ({ loginFunc, registerFunc }) => {
+const AuthenticationForm = ({ loginFunc, registerFunc, isSignedIn }) => {
+  console.log("Auth!!!");
   const [isLogginActive, setisLogginActive] = useState(true);
   const [container, setcontainer] = useState();
   const [current, setcurrent] = useState();

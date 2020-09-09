@@ -55,7 +55,8 @@ export const Register = ({ containerRef, registerFunc }) => {
         <button
           type="button"
           className="btn"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             registerFunc(username, email, password);
           }}
         >
