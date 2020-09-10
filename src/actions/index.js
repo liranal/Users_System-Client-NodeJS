@@ -9,7 +9,6 @@ export const register = (dataForRegister) => async (dispatch) => {
     "http://localhost:40040/api/auth/register",
     dataForRegister
   );
-  console.log(response);
   dispatch({ type: "REGISTER", payload: response.data });
 };
 

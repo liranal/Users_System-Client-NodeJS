@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Login, Register } from "./Forms";
 import "./AuthForm.scss";
 const AuthenticationForm = ({ loginFunc, registerFunc, isSignedIn }) => {
-  console.log("Auth!!!");
   const [isLogginActive, setisLogginActive] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [container, setcontainer] = useState();
   const [current, setcurrent] = useState();
   const [rightSide, setrightSide] = useState();
