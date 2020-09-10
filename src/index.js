@@ -6,9 +6,7 @@ import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 import { createStore, compose, applyMiddleware } from "redux";
 import "./index.css";
-import { history } from "./route/history";
-import { Router } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
@@ -18,9 +16,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter history={history}>
-      <App />
-    </BrowserRouter>
+    <App />
   </Provider>,
   document.getElementById("root")
 );

@@ -1,6 +1,6 @@
 import { SIGN_IN, SIGN_OUT, GET_USER_INFO } from "./types";
 import axios from "axios";
-
+import { history } from "../route/history";
 export const logout = (dataForLogout) => {
   return { type: SIGN_OUT, payload: { isSignedIn: false, userId: null } };
 };
@@ -32,5 +32,6 @@ export const login = (dataForLogin) => async (dispatch) => {
     );
 
     dispatch({ type: GET_USER_INFO, payload: UserInfoResponse.data });
+    history.push("/Home");
   }
 };
