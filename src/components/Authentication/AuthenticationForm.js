@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Login, Register } from "./Forms";
 import "./AuthForm.scss";
-const AuthenticationForm = ({ loginFunc, registerFunc, isSignedIn }) => {
+const AuthenticationForm = ({
+  loginFunc,
+  registerFunc,
+  isSignedIn,
+  errMessage,
+}) => {
   const [isLogginActive, setisLogginActive] = useState(true);
   // eslint-disable-next-line no-unused-vars
   const [container, setcontainer] = useState();
@@ -31,6 +36,7 @@ const AuthenticationForm = ({ loginFunc, registerFunc, isSignedIn }) => {
             <Login
               containerRef={(ref) => setcurrent(ref)}
               loginFunc={loginFunc}
+              loginErr={errMessage}
             />
           )}
           {!isLogginActive && (

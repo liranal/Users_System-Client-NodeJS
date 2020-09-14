@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT, GET_USER_INFO } from "./types";
+import { SIGN_IN, SIGN_OUT, GET_USER_INFO, LOGIN_FAILED } from "./types";
 import axios from "axios";
 import { history } from "../route/history";
 export const logout = (dataForLogout) => {
@@ -13,24 +13,31 @@ export const register = (dataForRegister) => async (dispatch) => {
 };
 
 export const login = (dataForLogin) => async (dispatch) => {
-  const LoginResponse = await axios.post(
-    "http://localhost:40040/api/auth/login",
-    dataForLogin
-  );
-  console.log(LoginResponse.data.auth);
-  if (LoginResponse.data.auth) {
-    dispatch({ type: SIGN_IN, payload: LoginResponse.data });
-
-    const UserInfoResponse = await axios.get(
-      `http://localhost:40040/api/users/${LoginResponse.data.userId}`,
-      {
-        headers: {
-          "x-access-token": LoginResponse.data.token,
-        },
-      }
+  try {
+    const LoginResponse = await axios.post(
+      "http://localhost:40040/api/auth/login",
+      dataForLogin
     );
+    console.log(LoginResponse.data.auth);
+    if (LoginResponse.data.auth) {
+      dispatch({ type: SIGN_IN, payload: LoginResponse.data });
 
-    dispatch({ type: GET_USER_INFO, payload: UserInfoResponse.data });
-    history.push("/Home");
+      const UserInfoResponse = await axios.get(
+        `http://localhost:40040/api/users/${LoginResponse.data.userId}`,
+        {
+          headers: {
+            "x-access-token": LoginResponse.data.token,
+          },
+        }
+      );
+
+      dispatch({ type: GET_USER_INFO, payload: UserInfoResponse.data });
+      history.push("/Home");
+    }
+  } catch (err) {
+    console.log(err.response);
+    if (err.response) {
+      dispatch({ type: LOGIN_FAILED, payload: err.response });
+    }
   }
 };

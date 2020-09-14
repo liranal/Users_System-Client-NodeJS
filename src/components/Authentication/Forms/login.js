@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import loginImg from "../../../login.svg";
+import Alert from "@material-ui/lab/Alert";
 
-export const Login = ({ containerRef, loginFunc }) => {
+export const Login = ({ containerRef, loginFunc, loginErr }) => {
+  console.log(loginErr);
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
   return (
@@ -49,6 +51,7 @@ export const Login = ({ containerRef, loginFunc }) => {
         >
           Login
         </button>
+        {loginErr ? <Alert severity="error">{loginErr}</Alert> : null}
       </div>
     </div>
   );
